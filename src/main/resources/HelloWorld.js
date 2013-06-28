@@ -1,1 +1,1 @@
-print("hello world, from a script file");
+print(blah);
