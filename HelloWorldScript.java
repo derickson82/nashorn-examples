@@ -37,7 +37,7 @@ public class HelloWorldScript {
             e.printStackTrace();
         }
 
-        try (Reader helloWorldScript = new InputStreamReader(HelloWorldScript.class.getResourceAsStream("/HelloWorld.js"))) {
+        try (Reader helloWorldScript = new FileInputStream("HelloWorld.js")) {
             jsEngine.eval(helloWorldScript);
         } catch (ScriptException | IOException e) {
             e.printStackTrace();
