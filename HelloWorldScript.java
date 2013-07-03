@@ -1,17 +1,10 @@
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.List;
+import javax.script.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dan
- * Date: 6/27/13
- * Time: 10:17 PM
- * To change this template use File | Settings | File Templates.
- */
 public class HelloWorldScript {
 
     public static void main(String... args) {
@@ -29,7 +22,7 @@ public class HelloWorldScript {
             });
         });
 
-        ScriptEngine jsEngine = scm.getEngineByName("js");
+        ScriptEngine jsEngine = scm.getEngineByName("nashorn");
 
         try {
             jsEngine.eval("print('Hello World');");
@@ -38,7 +31,13 @@ public class HelloWorldScript {
         }
 
         try (Reader helloWorldScript = new FileInputStream("HelloWorld.js")) {
-            jsEngine.eval(helloWorldScript);
+          Bindings bindings = new SimpleBindings();
+
+          List<Integer> blah = Arrays.asList(1, 2, 3, 4, 5, 6);
+          bindings.put("blah", blah);
+
+          jsEngine.eval(helloWorldScript, bindings);
+		  
         } catch (ScriptException | IOException e) {
             e.printStackTrace();
         }
